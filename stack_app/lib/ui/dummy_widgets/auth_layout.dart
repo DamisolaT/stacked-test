@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stack_app/ui/shared/ui_helpers.dart';
+import 'package:stack_app/ui/shared/styles.dart';
+//import 'package:stack_app/ui/shared/ui_helpers.dart';
 import 'package:stack_app/ui/shared/ui_helpers.dart';
 
 class AuthLayout extends StatelessWidget {
@@ -24,7 +26,6 @@ class AuthLayout extends StatelessWidget {
     required this.subtitle, 
     required this.mainButtonTitle, 
     required this.form, 
-    required this.showTermsText, 
     required this.onMainButtonTapped, 
     required this.onCreateAccountTapped, 
     required this.onForgotPassword, 
@@ -32,6 +33,7 @@ class AuthLayout extends StatelessWidget {
     required this.onSignInWithApple, 
     required this.onSignInWithGoogle, 
     required this.validationMessage, 
+    this.showTermsText = false,
     required this.busy,
     
   }) : super(key: key);
@@ -54,8 +56,90 @@ class AuthLayout extends StatelessWidget {
             Text(
               title,
               style: TextStyle(fontSize: 34),
-              
-            )
+              ),
+              verticalSpaceSmall,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: screenWidthPercentage(context, percentage:0.7),
+                  child: Text(
+                    subtitle,
+                    style: ktsMediumGreyBodyText,
+                  ),
+                ),
+              ),
+              verticalSpaceRegular,
+              form,
+              verticalSpaceRegular,
+              if(onForgotPassword != null)
+               Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: onForgotPassword(),
+                  child: Text(
+                    "Forgot Password",
+                    style: ktsMediumGreyBodyText.copyWith(
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+
+                ),
+               ),
+               verticalSpaceRegular,
+               if(validationMessage != null)
+               Text(
+                validationMessage,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: kBodyTextSize
+                ),
+               ),
+               if(validationMessage != null) verticalSpaceRegular,
+               GestureDetector(
+                onTap: onMainButtonTapped(),
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: kcPrimaryColor,
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+                  child: busy
+                  ?CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.white),)
+                  : Text(
+                    mainButtonTitle,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14
+                    ),)
+                ),
+               ),
+               verticalSpaceRegular,
+               if(onCreateAccountTapped != null)
+               GestureDetector(
+                onTap: onCreateAccountTapped(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an account"),
+                    horizontalSpaceTiny,
+                    Text(
+                      "Create an account",
+                      style: TextStyle(
+                        color: kcPrimaryColor
+                      ),
+                    )
+                  ],),
+               ),
+               if(showTermsText)
+               Text("By signing up you agree to our term, conditions and privacy policy.",
+               style: ktsMediumGreyBodyText,
+               textAlign: TextAlign.center,)
+
+
+
           // Other widgets can be added here
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:stack_app/app/app.bottomsheets.dart';
 import 'package:stack_app/app/app.dialogs.dart';
 import 'package:stack_app/app/app.locator.dart';
 import 'package:stack_app/app/app.router.dart';
+import 'package:stack_app/ui/login/login_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 Future<void> main() async {
@@ -20,8 +21,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: Routes.startupView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
+      //onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
+      home:LoginView() ,
       navigatorObservers: [
         StackedService.routeObserver,
       ],
